@@ -1,5 +1,6 @@
 package testtingsoftware.com.Triangle;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Triangle {
@@ -7,6 +8,7 @@ public class Triangle {
 	private double a;
 	private double b;
 	private double c;
+	private boolean inputValid = false;
 	public Triangle() {
 		this.a = 0;
 		this.b = 0;
@@ -36,16 +38,47 @@ public class Triangle {
 		this.c = c;
 	}
 	public void input() {
-		System.out.println("Nhap canh a:");
-		a = sc.nextFloat();
-		System.out.println("Nhap canh b:");
-		b = sc.nextFloat();
-		System.out.println("Nhap canh c:");
-		c = sc.nextFloat();
+		while (!inputValid) {
+	        try {
+	            System.out.print("Nhap canh a: ");
+	            a = sc.nextDouble();
+	            if (!isValidCanh(a)) {
+	                System.out.println("Canh a phai trong khoang 1-200");
+	                continue;
+	            }
+
+	            System.out.print("Nhap canh b: ");
+	            b = sc.nextDouble();
+	            if (!isValidCanh(b)) {
+	                System.out.println("Canh b phai trong khoang 1-200");
+	                continue;
+	            }
+
+	            System.out.print("Nhap canh c: ");
+	            c = sc.nextDouble();
+	            if (!isValidCanh(c)) {
+	                System.out.println("Canh c phai trong khoang 1-200");
+	                continue;
+	            }
+
+	            break;
+	        } catch (InputMismatchException e) {
+	            System.out.println("Gia tri nhap phai la so!");
+	            sc.nextLine();
+	        }
+	    }
+	
+	}
+	private boolean isValidCanh(double canh) {
+	    if(canh > 200 || canh <= 0) {
+	    	return false;
+	    }
+	    return true;
 	}
 	public boolean CheckTriangle() {
-		if(a <= 0 || b <= 0 || c <= 0) {
-			return false;
+		if (!isValidCanh(a) || !isValidCanh(b) || !isValidCanh(c)) {
+		    System.out.println("Canh phai trong khoang 1–200");
+		    return false;
 		}
 		else {
 			if(a + b > c  && a + c > b  && c + b > a) {
