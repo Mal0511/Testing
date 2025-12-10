@@ -1,0 +1,19 @@
+# PICT Model for Triangle Combinatorial Testing
+
+Side1: 0, 1, 5, 100, 200, 201
+Side2: 0, 1, 5, 100, 200, 201  
+Side3: 0, 1, 5, 100, 200, 201
+
+# Constraints
+IF [Side1] = 0 THEN [Side2] = 0 AND [Side3] = 0;
+IF [Side1] = 201 THEN [Side2] = 200 AND [Side3] = 200;
+
+# Triangle inequality constraints
+IF [Side1] >= [Side2] + [Side3] THEN [Side2] = 1 AND [Side3] = 1;
+IF [Side2] >= [Side1] + [Side3] THEN [Side1] = 1 AND [Side3] = 1;
+IF [Side3] >= [Side1] + [Side2] THEN [Side1] = 1 AND [Side2] = 1;
+
+# Special combinations
+{ [Side1] = [Side2], [Side2] = [Side3] } @ 2    # Equilateral
+{ [Side1] = [Side2], [Side2] != [Side3] } @ 2   # Isosceles
+{ [Side1] != [Side2], [Side2] != [Side3], [Side1] != [Side3] } @ 2 # Scalene

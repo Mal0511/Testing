@@ -1,0 +1,26 @@
+# PICT Model for NextDate Combinatorial Testing
+# Ngày, Tháng, Năm
+
+Day: 0, 1, 15, 28, 29, 30, 31, 32
+Month: 0, 1, 2, 4, 6, 7, 12, 13
+Year: 0, 1900, 2000, 2023, 2024, 2025, 2100
+
+# Constraints (ràng buộc)
+# Nếu Day = 0 hoặc âm → không quan tâm Month, Year
+# Nếu Month = 0 hoặc 13 → không quan tâm Day, Year hợp lệ
+# Nếu Year < 1812 hoặc > 2024 → không quan tâm Day, Month hợp lệ
+
+IF [Day] = 0 THEN [Month] = 0 AND [Year] = 0;
+IF [Day] = 32 THEN [Month] = 1 AND [Year] = 2023;
+IF [Month] = 0 THEN [Year] = 0;
+IF [Month] = 13 THEN [Year] = 2023;
+IF [Year] = 0 THEN [Month] = 0;
+IF [Year] = 2100 THEN [Month] = 1 AND [Day] = 15;
+
+# Các trường hợp đặc biệt cần test
+{ [Day] = 29, [Month] = 2 } @ 3    # Test 29/2 với nhiều năm
+{ [Day] = 31, [Month] IN {4,6,9,11} } @ 2  # Test 31 với tháng 30 ngày
+{ [Day] = 30, [Month] = 2 } @ 1    # Test 30/2
+{ [Day] = 31, [Month] = 2 } @ 1    # Test 31/2
+
+# Yêu cầu pairwise coverage (mặc định)
