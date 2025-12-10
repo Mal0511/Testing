@@ -58,43 +58,42 @@ public class Triangle {
 			}
 		}
 	}
-	public void CheckTriangleType() {
-		if(CheckTriangle()) {
-			if(a == b && a == c) {
-				System.out.print("Deu");
-			}
-			else {
-				double max = Math.max(a, Math.max(b, c));
-				double sumSq = a * a + b * b + c * c - max * max;
-				boolean iscan = (a == b || a == c || c == b);
-				boolean isvuong = sumSq == max * max; 
-				if(iscan && isvuong) {
-					System.out.print("Vuong can");
-				}
-				else {
-					if(iscan) {
-						System.out.print("can");
-					}
-					else {
-						if(isvuong) {
-							System.out.print("Vuong");
-						}
-						else {
-							if(sumSq > max * max) {
-								System.out.print("Nhon");
-							}
-							else {
-								System.out.print("Tu");
-							}
-						}
-					}
-				}
-			}
-		}
+	public String CheckTriangleType() {
+		if (!CheckTriangle()) {
+	        return "Invalid";
+	    }
+	    if (a == b && b == c) {
+	        return "Deu";
+	    }
+	    double max = Math.max(a, Math.max(b, c));
+	    double sumSq = a * a + b * b + c * c - max * max; 
+
+	    boolean isCan = (a == b || b == c || a == c);
+	    boolean isVuong = Math.abs(sumSq - max * max) < 1e-6;
+	    
+	    if (isCan && isVuong) {
+	        return "Vuong can";
+	    }
+
+
+	    if (isCan) {
+	        return "Can";
+	    }
+
+	    if (isVuong) {
+	        return "Vuong";
+	    }
+
+	    if (sumSq > max * max) {
+	        return "Nhon";
+	    }
+
+	    return "Tu";
+
 	}
 	public static void main(String[] args) {
 		Triangle tamgiac = new Triangle();
 		tamgiac.input();
-		tamgiac.CheckTriangleType();
+		System.out.println(tamgiac.CheckTriangleType());
 	}
 }
